@@ -1,0 +1,48 @@
+{
+  "name": "@coralswap/sdk",
+  "version": "0.1.0",
+  "description": "TypeScript SDK for the CoralSwap Protocol — a V2 AMM on Stellar/Soroban with dynamic fees and flash loans.",
+  "license": "MIT",
+  "main": "dist/src/index.js",
+  "types": "dist/src/index.d.ts",
+  "files": [
+    "dist",
+    "docs",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src --max-warnings 0",
+    "test": "vitest run",
+    "test:unit": "vitest run",
+    "test:integration": "vitest run --config vitest.integration.config.ts",
+    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "check": "npm run typecheck && npm run lint && npm run test && npm run build"
+  },
+  "keywords": [
+    "stellar",
+    "soroban",
+    "coralswap",
+    "amm",
+    "defi",
+    "sdk"
+  ],
+  "dependencies": {
+    "@stellar/stellar-sdk": "^13.0.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.0.0",
+    "@types/node": "^24.0.0",
+    "@typescript-eslint/eslint-plugin": "^8.0.0",
+    "@typescript-eslint/parser": "^8.0.0",
+    "eslint": "^9.0.0",
+    "prettier": "^3.0.0",
+    "typescript": "^5.5.0",
+    "typescript-eslint": "^8.68.0",
+    "vitest": "^3.0.0"
+  }
+}

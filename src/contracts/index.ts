@@ -1,0 +1,1 @@
+export { ABI, validateContractConfig, type ContractConfig } from "./config";

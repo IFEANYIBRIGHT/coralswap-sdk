@@ -1,0 +1,37 @@
+name: Integration Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  integration:
+    name: Testnet lifecycle
+    runs-on: ubuntu-latest
+    # Fork PRs cannot access repository secrets; the suite self-skips when the
+    # required environment is not present, so the "expected" signal here is a
+    # skipped run. Push to main runs against the real integration environment.
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      - name: Run testnet lifecycle integration tests
+        env:
+          STELLAR_TESTNET: ${{ secrets.STELLAR_TESTNET }}
+          TEST_RPC_URL: ${{ secrets.TEST_RPC_URL }}
+          TEST_KEYPAIR: ${{ secrets.TEST_KEYPAIR }}
+          TEST_TOKEN_A: ${{ secrets.TEST_TOKEN_A }}
+          TEST_TOKEN_B: ${{ secrets.TEST_TOKEN_B }}
+          TEST_FACTORY: ${{ secrets.TEST_FACTORY }}
+        run: npm run test:integration
+
+      # Future: RWA TWAP/oracle integration (main branch only).
+      # Requires TEST_RWA_POOL and TEST_NAV_FEED_ID secrets.
